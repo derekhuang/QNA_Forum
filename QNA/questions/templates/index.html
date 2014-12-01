@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load staticfiles i18n general_sidebar_tags %}
+
+{% block title %}{% spaceless %}{{ page_title }}{% endspaceless %}{% endblock %}
+
+{% block meta %}
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ feed_url }}" />
+{% endblock %}
+
+{% block content %}
+	<div class="tabBar">
+    {% include "question_title.html" %}
+    <a class="feed-icon" style="background-image:url('{% static "media/images/feed-icon-small.png" %}');" href="{{ feed_url }}" title="{% trans "subscribe to question RSS feed" %}"></a>
+    {{ questions.paginator.sort_tabs }}
+  </div>
+  <div id="listA">
+		{% for post in questions.paginator.page %}
+			<h2>{{ post.title }}</h2>
+			<p>{{ post.author }}</p>
+			<p>{{ post.published_time }}</p>
+		{% endfor %}
+  </div>
+{% endblock %}
+
+{% block tail %}
+    <div class="pager">{{ questions.paginator.page_numbers }}</div>
+    <div class="pagesize">{{ questions.paginator.page_sizes }}</div>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "question_count.html" %}
+    {% sidebar_upper %}
+    {% sidebar_lower %}
+		{% recent_tags %}
+{% endblock %}

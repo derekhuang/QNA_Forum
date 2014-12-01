@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% load staticfiles %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Ask, Answer, Get</title> 
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link href="{% static "media/style/style.css" %}" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="{% static "media/jquery-ui-1.11.1.custom/jquery-ui.css" %}" />
+		<script type="text/javascript" src="{% static  "media/js/osqa.main.js" %}"></script>
+	</head>
+	<body>
+		<div class="wrapper">
+        {% include "header.html" %}
+        {% block page_center %}
+				{% block full_width_banner %}{% endblock %}
+        <div id="wrapper">
+        		{% block site_width_banner %}{% endblock %}
+        		        
+            <div id="room">
+       					<div id="CALeft">
+            				{% block content%}
+            				{% endblock%}
+
+        				</div>
+        				<div id="CARight">
+            				{% block sidebar%}
+            				{% endblock%}
+        				</div>
+        		<div id="tail" style="clear:both;">
+            		{% block tail %}
+            		{% endblock %}
+        		</div>
+    		</div>
+    <div class="spacer3"></div>
+        </div>
+        {% endblock %}
+        <div id="ground">
+            {% include "footer.html" %}
+        </div>
+    </div>
+	</body>
+</html>
+	
+		
