@@ -17,6 +17,9 @@ class Tag(models.Model):
     def __str__(self):
         return self.description
     
+    """
+    Without this method, the Chinese characters can't be displayed correctly
+    """
     def __unicode__(self):
         return self.description
     
@@ -26,6 +29,7 @@ class Node(models.Model):
     body = models.TextField()
     published_time = models.DateTimeField()
     view_amount = models.IntegerField(default=0)
+    score = models.IntegerField(default=0)
     
     def __str__(self):
         return self.body
@@ -71,6 +75,22 @@ class Question(Node):
         content = (content[:SUMMARY_LENGTH] + '...') if len(content) > SUMMARY_LENGTH else content
 
         return content
+    
+    @property
+    def headline(self):
+        title = self.title
+
+        # Replaces multiple spaces with single ones.
+        title = re.sub(' +',' ', title)
+
+        return title
+    
+    """
+    TBD: To be updated to calculate the correct count of associated answers.
+    """
+    @property
+    def answer_count(self):
+        return 0
     
     @models.permalink    
     def get_absolute_url(self):

@@ -13,10 +13,10 @@
         <div class="votes">
             <div class="item-count">{{question.score}}</div>
             <div>{% trans "votes" %}</div>
-        </div >
+        </div>
         <div {% if question.accepted_count %}title="{% trans "this question has an accepted answer" %}"{% endif %} class="status {% if question.accepted_count %}answered-accepted{% endif %} {% ifequal question.answer_count 0 %}unanswered{% endifequal %}{% ifnotequal question.answer_count 0 %}answered{% endifnotequal %}">
             <div class="item-count">{{question.answer_count}}</div>
-            <div>{{% trans "answers" %}</div>
+            <div>{% trans "answers" %}</div>
         </div>
         <div class="views">
              <div class="item-count">{{question.view_amount|decorated_int|safe}}</div>
@@ -32,8 +32,9 @@
         </div>
         {% endif %}
         <div class="userinfo">
-            <span class="relativetime" title="{{question.last_activity_at}}">{% diff_date question.last_activity_at %}</span>
+            <span class="relativetime" title="{{question.published_time}}">{% diff_date question.published_time %}</span>
              {% if question.last_activity_by %}{% endif %}
+             <p>{{ question.author }}</p>
          </div>
 
         <div class="tags">

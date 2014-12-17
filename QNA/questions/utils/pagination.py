@@ -191,7 +191,7 @@ sort_tabs_template = template.loader.get_template('paginator/sort_tabs.html')
 Called in views.question_list() to construct the paginator_context for the template
 """
 def paginated(request, paginators, tpl_context):
-    if len(paginators) == 2 and isinstance(paginators[0], str):
+    if len(paginators) == 2 and isinstance(paginators[0], basestring):
         paginators = (paginators,)
 
     for list_name, context in paginators:

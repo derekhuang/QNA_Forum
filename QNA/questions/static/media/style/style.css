@@ -372,7 +372,7 @@ blockquote blockquote {
 
 .short-summary .question-summary-wrapper {
   float: right;
-  width: 565px;
+  width: 500px;
 }
 
 .short-summary .votes, .short-summary .status, .short-summary .views {

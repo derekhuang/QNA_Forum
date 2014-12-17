@@ -20,7 +20,7 @@
 			<p>{{ post.author }}</p>
 			<p>{{ post.published_time }}</p>
 		-->
-			{% question_list_item post %}
+			{% question_list_item post question_summary=no like=yes %}
 		{% endfor %}
   </div>
 {% endblock %}

@@ -103,6 +103,7 @@ def diff_date(date, limen=2):
     if not date:
         return _('unknown')
 
+    date = date.replace(tzinfo=None) # Remove the time-zone before the subtract
     now = datetime.datetime.now()
     diff = now - date
     days = diff.days
