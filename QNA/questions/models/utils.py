@@ -22,7 +22,7 @@ from questions.models.base import BaseModel
 
 MAX_MARKABLE_STRING_LENGTH = 100
 
-class PickledObject(str):
+class PickledObject(unicode):
     pass
 
 def dbsafe_encode(value, compress_object=True):
@@ -43,7 +43,7 @@ class PickledObjectField(models.Field):
     __metaclass__ = models.SubfieldBase
 
     marker_re = re.compile(r'^T\[(?P<type>\w+)\](?P<value>.*)$', re.DOTALL)
-    markable_types = dict((t.__name__, t) for t in (str, int))
+    markable_types = dict((t.__name__, t) for t in (str, int, unicode))
 
     def __init__(self, *args, **kwargs):
         self.compress = kwargs.pop('compress', True)
@@ -88,11 +88,11 @@ class PickledObjectField(models.Field):
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if value is not None and not isinstance(value, PickledObject):
-            if type(value).__name__ in self.markable_types and not (isinstance(value, str) and len(value
+            if type(value).__name__ in self.markable_types and not (isinstance(value, basestring) and len(value
                                                                                                           ) > MAX_MARKABLE_STRING_LENGTH):
-                value = str(self.generate_type_marked_value(value))
+                value = unicode(self.generate_type_marked_value(value))
             else:
-                value = str(dbsafe_encode(value, self.compress))
+                value = unicode(dbsafe_encode(value, self.compress))
         return value
 
     def value_to_string(self, obj):

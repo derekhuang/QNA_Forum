@@ -1,5 +1,10 @@
+import re
 from django.db import models
+from django.utils.html import strip_tags
 from django.contrib.auth.models import User as DjangoUser, AnonymousUser as DjangoAnonymousUser
+from django.utils.http import urlquote  as django_urlquote
+from django.template.defaultfilters import slugify
+from questions.settings.view import *
 
 # Create your models here.
 class Tag(models.Model):
@@ -12,6 +17,9 @@ class Tag(models.Model):
     def __str__(self):
         return self.description
     
+    def __unicode__(self):
+        return self.description
+    
 class Node(models.Model):
     id = models.AutoField(primary_key=True)
     author = models.CharField(max_length=50)
@@ -20,6 +28,17 @@ class Node(models.Model):
     view_amount = models.IntegerField(default=0)
     
     def __str__(self):
+        return self.body
+    
+    def __unicode(self):
+        return self.body
+    
+    @property
+    def user(self):
+        return self.author
+
+    @property
+    def html(self):
         return self.body
     
     class Meta:
@@ -37,6 +56,25 @@ class Question(Node):
     sub_tag = models.IntegerField(blank=True)
 
     like = models.IntegerField(default=0)
+    
+    @property
+    def summary(self):
+        content = strip_tags(self.html)
+
+        # Remove multiple spaces.
+        content = re.sub(' +',' ', content)
+
+        # Replace line breaks with a space, we don't need them at all.
+        content = content.replace("\n", ' ')
+
+        # Truncate and all an ellipsis if length greater than summary length.
+        content = (content[:SUMMARY_LENGTH] + '...') if len(content) > SUMMARY_LENGTH else content
+
+        return content
+    
+    @models.permalink    
+    def get_absolute_url(self):
+        return ('question', (), {'id': self.id, 'slug': django_urlquote(slugify(self.title))})
     
     class Meta:
         app_label = 'questions'

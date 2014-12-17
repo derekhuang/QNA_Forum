@@ -6,15 +6,15 @@
 #
 # $Id: html2text.py,v 1.7 2002/12/17 16:56:17 fresh Exp $
 
-import html
-#from string import lower, replace, split, join
+import sgmllib
+from string import lower, replace, split, join
 
-class HTML2Text(html.parser.HTMLParser):
+class HTML2Text(sgmllib.SGMLParser):
 
     #from htmlentitydefs import entitydefs # replace entitydefs from sgmllib
 
     def __init__(self, ignore_tags=(), indent_width=4, page_width=80):
-        html.parser.HTMLParser.__init__(self)
+        sgmllib.SGMLParser.__init__(self)
         self.result = ""
         self.indent = 0
         self.ol_number = 0

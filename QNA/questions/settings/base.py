@@ -4,7 +4,7 @@ Created on Oct 15, 2014
 @author: ejiahug
 '''
 import django.dispatch
-from django.utils.encoding import force_text, smart_text
+from django.utils.encoding import force_unicode, smart_unicode
 from datetime import datetime, timedelta
 import logging
 
@@ -47,7 +47,7 @@ class BaseSetting(object):
         return str(self.value)
 
     def __unicode__(self):
-        return smart_text(self.value)
+        return smart_unicode(self.value)
 
     @property
     def value(self):

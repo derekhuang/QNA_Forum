@@ -23,7 +23,7 @@ class QuestionItemNode(template.Node):
         return self.template.render(template.Context({
             'question': self.question.resolve(context),
             'question_summary': self.options.get('question_summary', 'no' ) == 'yes',
-            'favorite_count': self.options.get('favorite_count', 'no') == 'yes',
+            'like': self.options.get('like', 'no') == 'yes',
             'signature_type': self.options.get('signature_type', 'lite'),
         }))
         

@@ -7,7 +7,7 @@ Created on Oct 28, 2014
 import datetime
 import re
 from hashlib import md5
-from urllib.parse import quote_plus, urlencode
+from urllib import quote_plus, urlencode
 from django.db import models, IntegrityError, connection, transaction
 from django.utils.http import urlquote  as django_urlquote
 from django.utils.html import strip_tags
@@ -254,7 +254,7 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-        app_label = 'forum'
+        app_label = 'questions'
 
     def __init__(self, *args, **kwargs):
         super(BaseModel, self).__init__(*args, **kwargs)

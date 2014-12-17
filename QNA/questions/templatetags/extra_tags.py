@@ -7,10 +7,13 @@ import re
 import os
 import logging
 import math
+import datetime
 from django import template
+from django.utils import dateformat
 from django.utils.encoding import smart_text, force_text, smart_str
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
+from django.utils.translation import ungettext
 from questions.utils import html
 from questions import settings
 from questions.settings import view
@@ -94,3 +97,30 @@ def get_tag_font_size(tag):
 
     return font_size_of_current_tag
     """
+    
+@register.simple_tag
+def diff_date(date, limen=2):
+    if not date:
+        return _('unknown')
+
+    now = datetime.datetime.now()
+    diff = now - date
+    days = diff.days
+    hours = int(diff.seconds/3600)
+    minutes = int(diff.seconds/60)
+
+    if date.year != now.year:
+        return dateformat.format(date, 'd M \'y, H:i')
+    elif days > 2:
+        return dateformat.format(date, 'd M, H:i')
+
+    elif days == 2:
+        return _('2 days ago')
+    elif days == 1:
+        return _('yesterday')
+    elif minutes >= 60:
+        return ungettext('%(hr)d ' + _("hour ago"), '%(hr)d ' + _("hours ago"), hours) % {'hr':hours}
+    elif diff.seconds >= 60:
+        return ungettext('%(min)d ' + _("min ago"), '%(min)d ' + _("mins ago"), minutes) % {'min':minutes}
+    else:
+        return ungettext('%(sec)d ' + _("sec ago"), '%(sec)d ' + _("secs ago"), diff.seconds) % {'sec':diff.seconds}

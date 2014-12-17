@@ -64,7 +64,7 @@ help_text = "Don't wrap upper block with the standard style.",
 required=False))
 
 SIDEBAR_UPPER_TEXT = Setting('SIDEBAR_UPPER_TEXT',
-"""
+u"""
 [![WebFaction logo][2]][1]
 ## [Reliable OSQA Hosting][1]
 

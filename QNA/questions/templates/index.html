@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% load staticfiles i18n general_sidebar_tags %}
+﻿{% extends "base.html" %}
+{% load staticfiles i18n general_sidebar_tags question_list_tag %}
 
 {% block title %}{% spaceless %}{{ page_title }}{% endspaceless %}{% endblock %}
 
@@ -15,9 +15,12 @@
   </div>
   <div id="listA">
 		{% for post in questions.paginator.page %}
+		<!--
 			<h2>{{ post.title }}</h2>
 			<p>{{ post.author }}</p>
 			<p>{{ post.published_time }}</p>
+		-->
+			{% question_list_item post %}
 		{% endfor %}
   </div>
 {% endblock %}

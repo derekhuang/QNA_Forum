@@ -1,3 +1,4 @@
+#coding:utf-8
 from django.shortcuts import render, render_to_response
 from django.template import loader, Context, RequestContext
 from django.http import HttpResponse
@@ -5,6 +6,8 @@ from django.views.static import serve
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.db.models import Q, Count
+
+from questions import settings
 from questions.utils import pagination
 from questions.utils.pagination import generate_uri
 from questions.models import Question, Tag, Answer, Comment
@@ -105,6 +108,9 @@ def tag(request, tag):
 def tags(request):
     pass
     
+def question(request):
+    pass
+
 """
 def index(request):
     posts = Question.objects.all()
@@ -151,7 +157,7 @@ def question_list(request, initial,
                   extra_context={}):
 
     if show_summary is None:
-        show_summary = bool(SHOW_SUMMARY_ON_QUESTIONS_LIST.__bool__)
+        show_summary = bool(settings.SHOW_SUMMARY_ON_QUESTIONS_LIST)
 
     #questions = initial.filter_state(deleted=False)
     questions = initial

@@ -1,22 +1,26 @@
-{% load i18n humanize extra_filters extra_tags user_tags %}
+﻿{% load staticfiles %}
+{% load i18n %}
+{% load humanize %}
+{% load extra_filters %}
+{% load extra_tags %}
 <div class="short-summary">
-    <div class="counts">{% if favorite_count %}
+    <div class="counts">{% if like %}
         <div class="favorites">
-            <span class="favorite-mark{% if question.favourite_count %} on{% endif %}"></span>
-            <div class="item-count">{{question.favourite_count|intcomma}}</div>
+            <span class="favorite-mark{% if question.like %} on{% endif %}"></span>
+            <div class="item-count">{{question.like|intcomma}}</div>
         </div>
         {% endif %}
         <div class="votes">
-            <div class="item-count">{{question.score|intcomma}}</div>
-            <div>{% ifequal question.score 1 %}{% trans "vote" %}{% else %}{% trans "votes" %}{% endifequal %}</div>
+            <div class="item-count">{{question.score}}</div>
+            <div>{% trans "votes" %}</div>
         </div >
         <div {% if question.accepted_count %}title="{% trans "this question has an accepted answer" %}"{% endif %} class="status {% if question.accepted_count %}answered-accepted{% endif %} {% ifequal question.answer_count 0 %}unanswered{% endifequal %}{% ifnotequal question.answer_count 0 %}answered{% endifnotequal %}">
-            <div class="item-count">{{question.answer_count|intcomma}}</div>
-            <div>{% ifequal question.answer_count 1 %}{% trans "answer" %}{% else %}{% trans "answers" %}{% endifequal %}</div>
+            <div class="item-count">{{question.answer_count}}</div>
+            <div>{{% trans "answers" %}</div>
         </div>
         <div class="views">
-             <div class="item-count">{{question.view_count|decorated_int|safe}}</div>
-             <div>{% ifequal question.view_count 1 %}{% trans "view" %}{% else %}{% trans "views" %}{% endifequal %}</div>
+             <div class="item-count">{{question.view_amount|decorated_int|safe}}</div>
+             <div>{% ifequal question.view_amount 1 %}{% trans "view" %}{% else %}{% trans "views" %}{% endifequal %}</div>
         </div>
     </div>
 
@@ -29,12 +33,13 @@
         {% endif %}
         <div class="userinfo">
             <span class="relativetime" title="{{question.last_activity_at}}">{% diff_date question.last_activity_at %}</span>
-            {% if question.last_activity_by %}{% user_signature question.last_activity_by signature_type %}{% endif %}
+             {% if question.last_activity_by %}{% endif %}
+         </div>
+
+        <div class="tags">
+            <a class="tag-link-{{ question.tag }}" href="{% url "tag_questions" question.tag|urlencode %}" title="{% trans "see questions tagged" %} '{{ question.tag }}'" rel="tag">{{ question.tag }}</a>
         </div>
 
-        <div class="tags">{% for tag in question.tagname_list %}
-            <a class="tag-link-{{ tag }}" href="{% url "tag_questions" tag|urlencode %}" title="{% trans "see questions tagged" %} '{{ tag }}'" rel="tag">{{ tag }}</a>{% endfor %}
-        </div>
     </div>
 
 </div>

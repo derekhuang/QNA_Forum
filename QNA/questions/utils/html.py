@@ -5,7 +5,7 @@ Created on Oct 27, 2014
 '''
 """Utilities for working with HTML."""
 from html5lib import sanitizer, serializer, tokenizer, treebuilders, treewalkers, HTMLParser
-from urllib.parse import quote_plus
+from urllib import quote_plus
 from django.utils.html import strip_tags
 from questions.utils.html2text import HTML2Text
 from django.utils.safestring import mark_safe
